@@ -1,0 +1,92 @@
+<Manager>:
+    Login:
+        name: 'login'
+    Menu:
+        name: 'menu'
+
+    Tasks:
+        name: 'tasks'
+
+<Login>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 100
+        Label:
+            text: 'Login'
+        Botao:
+            text: 'Entrar'
+            on_release: app.root.current = 'menu'
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgba: 1,1,1,1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'mold.png'
+        BoxLayout:
+            Label:
+                text: 'Opções'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 100
+            spacing: 30
+            Botao:
+                text: 'Tarefas'
+                on_release: app.root.current = 'tasks'
+                cor: 0.1,0.1,0.1,1
+            Botao:
+                text: 'Sair'
+                on_release: app.stop()
+
+<Tasks>:
+    BoxLayout:
+        orientation:'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'Tarefas'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Menu'
+                    on_release: app.root.current = 'menu'
+                ActionSeparator:
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+        ScrollView:
+            BoxLayout:
+                id:box_scroll
+                orientation:'vertical'
+                size_hint_y:None
+                height: self.minimum_height
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            TextInput:
+                id: texto
+            Button:
+                size_hint_x: None
+                text: '+'
+                on_release: root.addWidget()
+
+<Task>:
+    size_hint_y: None
+    height:200
+    Label:
+        id: label
+        font_size: 30
+    Button:
+        text:'x'
+        size_hint_x:None
+        width:60
+        on_release: app.root.get_screen('tasks').ids.box_scroll.remove_widget(root)
+
+
+
+
+
+

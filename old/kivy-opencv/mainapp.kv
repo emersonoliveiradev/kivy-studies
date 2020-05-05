@@ -1,0 +1,35 @@
+<Manager>
+    Menu:
+        name: 'menu'
+    MyDetection:
+        name: 'mydetection'
+
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 100
+        Button:
+            size_hint_y: None
+            height: 100
+            text: 'Start'
+            on_release: app.root.current = 'mydetection'
+
+<MyDetection>
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title: 'menu'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Menu'
+                    on_release: app.root.current = 'menu'
+                ActionSeparator:
+                ActionButton:
+                    text: 'sair'
+                    on_release: app.stop()
+        Button:
+            text: 'Camera'
+
