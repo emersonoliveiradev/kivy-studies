@@ -1,5 +1,4 @@
 from kivy.app import App
-from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
@@ -9,8 +8,8 @@ from kivy.uix.label import Label
 from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.graphics import Color, Ellipse, Rectangle
 from kivy.properties import ListProperty, StringProperty, NumericProperty
-
-
+from kivy.uix.popup import Popup
+from kivy.uix.image import Image
 
 
 class Manager(ScreenManager):
@@ -20,10 +19,33 @@ class Login(Screen):
     pass
 
 class Menu(Screen):
-    pass
+    def on_pre_enter(self):
+        Window.bind(on_request_close=self.confirmacao)
+
+    def  confirmacao(self, *args, **kwargs):
+        box = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        botoes = BoxLayout(padding=10, spacing=10)
+
+        pop = Popup(title='Deseja mesmo sair', content=box, size_hint=(None, None), size=(300, 180))
+
+        sim = Botao(text='Sim', on_release=App.get_running_app().stop)
+        nao = Botao(text='Não', on_release=pop.dismiss)
+        atencao = Image(source='atencao.png')
+
+        botoes.add_widget(sim)
+        botoes.add_widget(nao)
+        box.add_widget(atencao)
+        box.add_widget(botoes)
+
+        pop.open()
+        return True
+
+
 
 class Botao(ButtonBehavior, Label):
     cor = ListProperty([0.1, 0.5, 0.7, 1])
+    cor2 = ListProperty([0.1, 0.1, 0.1, 1])
+
     def __init(self, **kwargs):
         super(Botao, self).__init__(**kwargs)
 
@@ -32,6 +54,16 @@ class Botao(ButtonBehavior, Label):
 
     def on_size(self, *args):
         self.atualizar()
+
+    def on_press(self, *args):
+        self.cor, self.cor2 = self.cor2, self.cor
+
+    def on_release(self, *args):
+        self.cor, self.cor2 = self.cor2, self.cor
+
+    def on_cor(self, *args):
+        self.atualizar()
+
 
     def atualizar(self, *args):
         self.canvas.before.clear()

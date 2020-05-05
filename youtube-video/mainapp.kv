@@ -28,19 +28,22 @@
                 pos: self.pos
                 source: 'mold.png'
         BoxLayout:
-            Label:
-                text: 'Opções'
-        BoxLayout:
             orientation: 'vertical'
-            padding: 100
-            spacing: 30
+            padding: 200
+            spacing: 20
+            BoxLayout:
+                Label:
+                    text: 'Opções'
             Botao:
                 text: 'Tarefas'
                 on_release: app.root.current = 'tasks'
                 cor: 0.1,0.1,0.1,1
             Botao:
+                text: 'Other'
+                on_release: ''
+            Botao:
                 text: 'Sair'
-                on_release: app.stop()
+                on_release: root.confirmacao()
 
 <Tasks>:
     BoxLayout:
